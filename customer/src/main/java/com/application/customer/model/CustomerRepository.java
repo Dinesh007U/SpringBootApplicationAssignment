@@ -13,6 +13,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 	
 	  @Query("SELECT c FROM Customer c WHERE " + 
 	  "c.name = :query OR " + 
+ 	  "c.id = :query OR " + 
 	  "CONCAT(c.onboardedDate) LIKE CONCAT('%', :query, '%')") // List<Customer>
 	 List<Customer> searchCustomer(@Param("query") String query);
 	 
