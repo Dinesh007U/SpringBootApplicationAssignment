@@ -165,3 +165,7 @@ taskkill /F /PID <PID>
 05-08-2023
 ----------
 Updated a search query by doing operations like searching customer details based up on customer's name, id and onboardedDate.
+----------------------------------------------------------------
+06-08-2023
+----------
+Created a Custom Exception Handling for Crud Operations.
