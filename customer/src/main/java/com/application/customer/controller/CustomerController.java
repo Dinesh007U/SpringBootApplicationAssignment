@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.application.customer.exception.CustomerNotFoundException;
+import com.application.customer.exception.ErrorMessage;
 import com.application.customer.model.Customer;
+import com.application.customer.model.SearchCriteria;
 import com.application.customer.service.CustomerService;
 
 
@@ -55,10 +57,18 @@ public class CustomerController {
 
 	    // Update Customer
 	    @PutMapping
-	    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer) {
-	        customerService.updateCustomer(customer);
-	        return ResponseEntity.ok("Customer entry is updated successfully");
-	    }
+	    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
+//	        customerService.updateCustomer(customer);
+//	        return ResponseEntity.ok("Customer entry is updated successfully");
+//	    }
+	    	        try {
+	    	            String result = customerService.updateCustomer(customer);
+	    	            return ResponseEntity.ok("Customer entry is updated successfully");
+	    	        } catch (CustomerNotFoundException ex) {
+	    	            ErrorMessage errorMessage = new ErrorMessage(404, "No Value Present", ex.getMessage());
+	    	            return ResponseEntity.status(404).body(errorMessage);
+	    	        }
+	    	    }
 
 	    // Delete Customer
 	    @DeleteMapping("{id}")
@@ -71,8 +81,19 @@ public class CustomerController {
 	
 	
 	//search api  
+	    @PostMapping("/search-criteria")
+	    public ResponseEntity<List<Customer>> searchCustomers(@RequestBody SearchCriteria searchCriteria) {
+	        // Pass the search criteria to the service layer
+	        List<Customer> customers = customerService.searchCriteriaCustomer(searchCriteria);
+	        return ResponseEntity.ok(customers);
+	    }
+
+	    
+	    
+	    
+	    
 	// link -> /customer/search?query={name} or {onboardedDate}
-	@GetMapping("/search")
+	    	@GetMapping("/search")
 	public ResponseEntity<List<Customer>> serachCustomer(@RequestParam("query")String query){
 		return ResponseEntity.ok(customerService.searchCustomer(query));
 		
