@@ -1,17 +1,19 @@
 package com.application.customer.service.impl;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.application.customer.exception.BadRequestException;
 import com.application.customer.exception.CustomerNotFoundException;
 import com.application.customer.exception.DuplicateConflictException;
+import com.application.customer.exception.NoValuePresentException;
 import com.application.customer.model.Customer;
 import com.application.customer.model.CustomerRepository;
-import com.application.customer.model.SearchCriteria;
 import com.application.customer.service.CustomerService;
 
 @Service
@@ -72,8 +74,21 @@ public class CustomerServiceImple implements CustomerService {
 
 	        if (existingCustomerOptional.isPresent()) {
 	            // Customer with the given ID exists, so perform the update
-	            customerRepository.save(customer);
-	            return "Success";
+	        	// Performing other validations here using javax.validation annotations
+		        // Perform validations using the customValidationMethods
+		        customValidationMethods.validateName(customer.getName());
+		        customValidationMethods.validateEmail(customer.getEmail());
+		        customValidationMethods.validateAge(customer.getAge());
+		        customValidationMethods.validateCity(customer.getCity());
+		        customValidationMethods.validateState(customer.getState());
+		        customValidationMethods.validateCountry(customer.getCountry());
+		        customValidationMethods.validateZipcode(customer.getZipcode());
+		        customValidationMethods.validateOnboardedDate(customer.getOnboardedDate());
+		        
+		        // If all validations pass, save the customer
+		        customerRepository.save(customer);
+		        return "Success";
+	          
 	        } else {
 	            // Customer with the given ID does not exist, throw the custom exception
 	            throw new CustomerNotFoundException("Customer with ID " + id + " not found for update");
@@ -98,62 +113,125 @@ public class CustomerServiceImple implements CustomerService {
 	}
     
     //search
-@Override
-public List<Customer> searchCriteriaCustomer(SearchCriteria searchCriteria) {
-    String id = searchCriteria.getId();
-    String name = searchCriteria.getName();
-    Date onboardedDate = searchCriteria.getOnboardedDate();
 
-    // Implement the logic to search customers based on the provided criteria
-    // Use the customerRepository methods accordingly
-   
-    return customerRepository.searchCustomersByCriteria(id, name, onboardedDate);
-
-}
 
     @Override
     public List<Customer> searchCustomer(String query) {
-        return customerRepository.searchCustomer(query);
+    	 if (query == null || query.isEmpty()) {
+             throw new NoValuePresentException("The given input is wrong.");
+         }
+    	 List<Customer> customers = customerRepository.searchCustomer(query);
+    	 if(customers.isEmpty()) {
+     		throw new CustomerNotFoundException("No customers found after the provided date.");
+     	}
+     	return customers;
+        
     }
 
     @Override
     public List<Customer> searchStartsnameCustomer(String query) {
-        return customerRepository.searchStartsnameCustomer(query);
+    	  if (query == null || query.isEmpty()) {
+              throw new NoValuePresentException("The given input is wrong.");
+          }
+    	  List<Customer> customers = customerRepository.searchStartsnameCustomer(query);
+    	  if(customers.isEmpty()) {
+      		throw new CustomerNotFoundException("No customers found after the provided date.");
+      	}
+      	return customers;
     }
     @Override
     public List<Customer> searchEndsnameCustomer(String query) {
-        return customerRepository.searchEndsnameCustomer(query);
+    	if (query == null ) {
+            throw new NoValuePresentException("The given input is wrong.");
+        }
+    	List<Customer> customers = customerRepository.searchEndsnameCustomer(query);
+    	if(customers.isEmpty()) {
+    		throw new CustomerNotFoundException("No customers found after the provided date.");
+    	}
+    	return customers;
     }
     @Override
     public List<Customer> searchContainsnameCustomer(String query) {
-        return customerRepository.searchContainsnameCustomer(query);
+    	if (query == null ) {
+            throw new NoValuePresentException("The given input is wrong.");
+        }
+    	List<Customer> customers = customerRepository.searchContainsnameCustomer(query);
+       // return customerRepository.searchContainsnameCustomer(query);
+    	if(customers.isEmpty()) {
+    		throw new CustomerNotFoundException("No customers found after the provided date.");
+    	}
+    	return customers;
     }
 
-    @Override
-    public List<Customer> searchGreaterCustomer(String query) {
-        Date date = Date.valueOf(query);
-        return customerRepository.searchGreaterCustomer(date);
-    }
+    //date
     
     @Override
-    public List<Customer> searchCustomersByOnboardedDateGreaterThan(Date date) {
-        return customerRepository.searchCustomersByOnboardedDateGreaterThan(date);
+    public List<Customer> searchGreaterCustomer(LocalDate date) {
+    	 if (date == null) {
+             throw new NoValuePresentException("The given date is null.");
+         }
+        //return customerRepository.searchGreaterCustomer(date);
+    	  List<Customer> customers = customerRepository.searchGreaterCustomer(date);
+          if (customers.isEmpty()) {
+              throw new CustomerNotFoundException("No customers found after the provided date.");
+          }
+          return customers;
+    }
+    @Override
+    public List<Customer> searchGreaterEqualsCustomer(LocalDate date) {
+    	 if (date == null) {
+             throw new NoValuePresentException("The given date is null.");
+         }
+        //return customerRepository.searchGreaterEqualsCustomer(date);
+    	 List<Customer> customers = customerRepository.searchGreaterEqualsCustomer(date);
+         if (customers.isEmpty()) {
+             throw new CustomerNotFoundException("No customers found on or after the provided date.");
+         }
+         return customers;
+    }
+    @Override
+    public List<Customer> searchLessCustomer(LocalDate date) {
+    	 if (date == null) {
+             throw new NoValuePresentException("The given date is null.");
+         }
+        //return customerRepository.searchLessCustomer(date);
+    	 List<Customer> customers = customerRepository.searchLessCustomer(date);
+         if (customers.isEmpty()) {
+             throw new CustomerNotFoundException("No customers found before the provided date.");
+         }
+         return customers;
+    }
+    @Override
+    public List<Customer> searchLessEqualsCustomer(LocalDate date) {
+    	if (date == null) {
+            throw new NoValuePresentException("The given date is null.");
+        }
+       // return customerRepository.searchLessEqualsCustomer(date);
+        List<Customer> customers = customerRepository.searchLessEqualsCustomer(date);
+    	 if (customers.isEmpty()) {
+             throw new CustomerNotFoundException("No customers found on or before the provided date.");
+         }
+         return customers;
     }
 
     @Override
-    public List<Customer> searchGreaterEqualsCustomer(Date date) {
-        return customerRepository.searchGreaterEqualsCustomer(date);
-    }
-    @Override
-    public List<Customer> searchLessCustomer(Date date) {
-        return customerRepository.searchLessCustomer(date);
-    }
-    @Override
-    public List<Customer> searchLessEqualsCustomer(Date date) {
-        return customerRepository.searchLessEqualsCustomer(date);
-    }
+    public List<Customer> searchEntityCustomers(String id, String name, LocalDate date) {
+        // Validate the input data to ensure at least one valid search criteria is provided
+        boolean isValidSearch = (id != null && !id.isEmpty()) || (name != null && !name.isEmpty()  || date != null  );
 
+        if (!isValidSearch) {
+            throw new BadRequestException("The given entity is wrong");
+        }
 
+        // Implement the logic to search customers based on the provided criteria
+        List<Customer> customers = customerRepository.searchEntityCustomers(id, name,date);
+
+        if (customers.isEmpty()) {
+            throw new CustomerNotFoundException("The given entity's customer details do not exist");
+        }
+
+        return customers;
+    }
 
 	
 }

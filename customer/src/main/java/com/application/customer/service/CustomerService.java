@@ -18,12 +18,12 @@ public interface CustomerService {
     
     //date
    
-    List<Customer> searchCustomersByOnboardedDateGreaterThan(Date date);
+    //List<Customer> searchCustomersByOnboardedDateGreaterThan(Date date);
 
-    List<Customer> searchGreaterCustomer(String query);
-    List<Customer> searchGreaterEqualsCustomer(Date date);  
-    List<Customer> searchLessCustomer(Date date);  
-    List<Customer> searchLessEqualsCustomer(Date date);  
+    List<Customer> searchGreaterCustomer(LocalDate date);
+    List<Customer> searchGreaterEqualsCustomer(LocalDate date);  
+    List<Customer> searchLessCustomer(LocalDate date);  
+    List<Customer> searchLessEqualsCustomer(LocalDate date);  
 
   
     
@@ -35,5 +35,7 @@ public interface CustomerService {
 	List<Customer> searchEndsnameCustomer(String query);
 	List<Customer> searchContainsnameCustomer(String query);
 	
-	
+    
+	List<Customer> searchEntityCustomers(String id, String name, LocalDate date);
+
 }

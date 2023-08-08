@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import jakarta.validation.ValidationException;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 @Component
@@ -17,15 +19,14 @@ public class CustomValidationMethods {
     }
     
     public void validateEmail(String email) {
-    	//email validation:
-    	 String emailRegex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
-         Pattern pattern = Pattern.compile(emailRegex);
-
-         if (email == null || email.trim().isEmpty() || !pattern.matcher(email).matches()) {
-             throw new ValidationException("Invalid email format");
-         }
-     
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        
+        if (email == null || email.trim().isEmpty() || !pattern.matcher(email).matches()) {
+            throw new ValidationException("Invalid email format");
+        }
     }
+
 
     public void validateAge(int age) {
         if (age < 0 || age > 150) {
@@ -57,8 +58,16 @@ public class CustomValidationMethods {
         }
     }
 
-    public void validateOnboardedDate(LocalDate onboardedDate) {
-        if (onboardedDate == null || onboardedDate.isAfter(LocalDate.now())) {
+    public void validateOnboardedDate(LocalDate date) {
+        if (date == null ) {
+            throw new ValidationException("OnboardedDate is not null.");
+        }
+       
+        // Get the current date
+        LocalDate currentDate = LocalDate.now();
+
+        // Compare the provided onboardedLocalDate with the currentDate
+        if (date.isAfter(currentDate)) {
             throw new ValidationException("OnboardedDate should be current date or before the current date.");
         }
     }

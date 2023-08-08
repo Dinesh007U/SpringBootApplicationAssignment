@@ -1,16 +1,15 @@
 package com.application.customer.model;
 
 import java.time.LocalDate;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="customer_table")
@@ -40,7 +39,8 @@ public class Customer {
     private Integer zipcode;
     
     
-    @Column(name = "onboarded_date")
+    @Column(name = "onboarded_Date")
+  // @JsonFormat(pattern = "yyyy-MM-dd", shape =Shape.STRING)
     private LocalDate onboardedDate;
 
 	
