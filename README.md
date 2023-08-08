@@ -169,3 +169,12 @@ Updated a search query by doing operations like searching customer details based
 06-08-2023
 ----------
 Created a Custom Exception Handling for Crud Operations.
+----------------------------------------------------------------
+07-08-2023
+----------
+Solved an error in searching customer details by using date.
+Created a request by using json file.
+Created a Customer Exception Handling for Search Operations.
+-----------------------------------------------------------------
+08-08-2023
+----------
