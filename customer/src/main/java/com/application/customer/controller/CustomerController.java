@@ -1,10 +1,13 @@
 package com.application.customer.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.customer.exception.CustomerNotFoundException;
 import com.application.customer.exception.ErrorMessage;
+import com.application.customer.exception.NoValuePresentException;
 import com.application.customer.model.Customer;
 import com.application.customer.model.SearchCriteria;
 import com.application.customer.service.CustomerService;
@@ -62,7 +66,7 @@ public class CustomerController {
 //	        return ResponseEntity.ok("Customer entry is updated successfully");
 //	    }
 	    	        try {
-	    	            String result = customerService.updateCustomer(customer);
+	    	            customerService.updateCustomer(customer);
 	    	            return ResponseEntity.ok("Customer entry is updated successfully");
 	    	        } catch (CustomerNotFoundException ex) {
 	    	            ErrorMessage errorMessage = new ErrorMessage(404, "No Value Present", ex.getMessage());
@@ -73,7 +77,7 @@ public class CustomerController {
 	    // Delete Customer
 	    @DeleteMapping("{id}")
 	    public ResponseEntity<String> deleteCustomer(@PathVariable("id") String id) {
-	    	 String customer = customerService.deleteCustomer(id);
+	    	 customerService.deleteCustomer(id);
 	       	        return ResponseEntity.ok("Customer entry is deleted successfully");
 				    }
 
@@ -81,18 +85,13 @@ public class CustomerController {
 	
 	
 	//search api  
-	    @PostMapping("/search-criteria")
-	    public ResponseEntity<List<Customer>> searchCustomers(@RequestBody SearchCriteria searchCriteria) {
-	        // Pass the search criteria to the service layer
-	        List<Customer> customers = customerService.searchCriteriaCustomer(searchCriteria);
-	        return ResponseEntity.ok(customers);
-	    }
+	   
 
 	    
 	    
 	    
 	    
-	// link -> /customer/search?query={name} or {onboardedDate}
+	// link -> /customer/search?query={name} or {onboardedLocalDate}
 	    	@GetMapping("/search")
 	public ResponseEntity<List<Customer>> serachCustomer(@RequestParam("query")String query){
 		return ResponseEntity.ok(customerService.searchCustomer(query));
@@ -120,54 +119,49 @@ public class CustomerController {
 	
 	//dates
 	
-//	@GetMapping("/search/greater")
-//	public ResponseEntity<List<Customer>> serachGreaterCustomer(@RequestParam("query") String query) {
-//	    Date date = Date.valueOf(query);
-//	    return ResponseEntity.ok(customerService.searchGreaterCustomer(date));
-//	}
-//	@GetMapping("/search/greater")
-//	public ResponseEntity<List<Customer>> serachGreaterCustomer(@RequestParam("query") String query) {
-//	    Date date = Date.valueOf(query);
-//	    return ResponseEntity.ok(customerService.searchGreaterCustomer(date));
-//	}
-//	 @GetMapping("/search/greater")
-//	    public ResponseEntity<List<Customer>> searchGreaterCustomer(@RequestParam("query") String query) {
-//	        return ResponseEntity.ok(customerService.searchGreaterCustomer(query));
-//	    }
-	
-	@GetMapping("/search/greater")
-    public ResponseEntity<List<Customer>> searchCustomersByOnboardedDateGreaterThan(
-            @RequestParam("onboardedDate") String onboardedDateStr
-    ) {
-        Date onboardedDate = Date.valueOf(onboardedDateStr);
-        List<Customer> customers = customerService.searchCustomersByOnboardedDateGreaterThan(onboardedDate);
-        return ResponseEntity.ok(customers);
-    }
 
+
+	@GetMapping("/search/greater")
+    public ResponseEntity<List<Customer>> searchGreaterCustomer(@RequestParam("query") String query) {
+		 LocalDate date = LocalDate.parse(query); 
+		 return ResponseEntity.ok(customerService.searchGreaterCustomer(date));
+    }
 	    @GetMapping("/search/less")
 	    public ResponseEntity<List<Customer>> searchLessCustomer(@RequestParam("query") String query) {
-	        Date date = Date.valueOf(query);
+	        LocalDate date = LocalDate.parse(query);
 	        return ResponseEntity.ok(customerService.searchLessCustomer(date));
 	    }
 
 	    @GetMapping("/search/ge")
 	    public ResponseEntity<List<Customer>> searchGreaterEqualsCustomer(@RequestParam("query") String query) {
-	        Date date = Date.valueOf(query);
+	        LocalDate date = LocalDate.parse(query);
 	        return ResponseEntity.ok(customerService.searchGreaterEqualsCustomer(date));
 	    }
 
 	    @GetMapping("/search/le")
 	    public ResponseEntity<List<Customer>> searchLessEqualsCustomer(@RequestParam("query") String query) {
-	        Date date = Date.valueOf(query);
+	        LocalDate date = LocalDate.parse(query);
 	        return ResponseEntity.ok(customerService.searchLessEqualsCustomer(date));
 	    }
 
 		
 	    
-	    
+	    @GetMapping("/searchcustomers")
+	    public ResponseEntity<List<Customer>> searchEntityCustomers(@RequestBody SearchCriteria searchCriteria) {
+	        List<Customer> customers = customerService.searchEntityCustomers(
+	            searchCriteria.getId(),
+	            searchCriteria.getName(),
+	            searchCriteria.date()
+	        );
+	        return ResponseEntity.ok(customers);
+	    }
 	 
-	
-
+	    @ExceptionHandler(NoValuePresentException.class)
+	    public ResponseEntity<ErrorMessage> handleNoValuePresentException(NoValuePresentException ex) {
+	        ErrorMessage errorMessage = new ErrorMessage(500, "Bad Request", ex.getMessage());
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+	    }
+	    
 	
 
 }
