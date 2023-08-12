@@ -10,8 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 	
-// JPQL query with different operations for onboardedDate
+	List<Customer> findByname(String name);
 	
+// JPQL query with different operations for onboardedDate
 	  @Query("SELECT c FROM Customer c WHERE " + 
 	  "c.name = :query OR " + 
 	  "c.id = :query OR " + 

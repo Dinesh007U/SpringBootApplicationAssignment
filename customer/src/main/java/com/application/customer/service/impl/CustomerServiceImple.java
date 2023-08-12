@@ -1,6 +1,5 @@
 package com.application.customer.service.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class CustomerServiceImple implements CustomerService {
     CustomerRepository customerRepository;
 	CustomValidationMethods customValidationMethods;
 
-    public CustomerServiceImple(CustomerRepository customerRepository,CustomValidationMethods customValidationMethods) {
+    public CustomerServiceImple(CustomerRepository customerRepository, CustomValidationMethods customValidationMethods) {
         this.customerRepository = customerRepository;
         this.customValidationMethods = customValidationMethods;
     }
@@ -58,7 +57,7 @@ public class CustomerServiceImple implements CustomerService {
 	        customValidationMethods.validateCountry(customer.getCountry());
 	        customValidationMethods.validateZipcode(customer.getZipcode());
 	        customValidationMethods.validateOnboardedDate(customer.getOnboardedDate());
-	        
+	         
 	        // If all validations pass, save the customer
 	        customerRepository.save(customer);
 	        return "Success";
