@@ -1,0 +1,69 @@
+[
+
+{
+"id": "A1",
+"name": "Raghu Kumar",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-10"
+},
+{
+"id": "A2",
+"name": "Sarath Kumar",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-11"
+},
+{
+"id": "A3",
+"name": "Mathan Gopi",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-12"
+},
+{
+"id": "A4",
+"name": "Sam Thomas",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-13"
+},
+{
+"id": "A5",
+"name": "Mathan Raghu",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-14"
+},
+{
+"id": "A6",
+"name": "Raghu Palani",
+"email": "raghu@email.com",
+"age": 22,
+"city": "Theni",
+"state": "Tamil Nadu",
+"country": "India",
+"zipcode": 634500,
+"onboardedDate": "2005-04-15"
+}
+]
