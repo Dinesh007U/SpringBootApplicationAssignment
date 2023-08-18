@@ -176,5 +176,8 @@ Solved an error in searching customer details by using date.
 Created a request by using json file.
 Created a Customer Exception Handling for Search Operations.
 -----------------------------------------------------------------
-08-08-2023
+18-08-2023
 ----------
+Updated a customer Application code until, JUnit tests
+Additionally, added Karate test separate application to test by Karate Test Framework.
+------------------------------------------------------------------
