@@ -46,7 +46,7 @@ public class CustomerController {
 	}
 
 	    // Read all Customer Details
-	    @GetMapping
+	    @GetMapping("/details")
 	    public ResponseEntity<List<Customer>> getAllCustomer() {
 	        List<Customer> customer = customerService.getAllCustomer();
 	        return ResponseEntity.ok(customer);
@@ -54,9 +54,11 @@ public class CustomerController {
 
 	    // Create Customer Details
 	    @PostMapping
-	    public ResponseEntity<String> createCustomerDetails(@RequestBody Customer customer) {
+	    	public ResponseEntity<String> createCustomerDetails(@RequestBody Customer customer) {
+
 	        customerService.createCustomer(customer);
 	        return ResponseEntity.ok("Customer entry is created successfully");
+
 	    }
 
 	    // Update Customer

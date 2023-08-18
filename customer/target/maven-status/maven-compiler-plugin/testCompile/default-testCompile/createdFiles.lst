@@ -1,0 +1,6 @@
+com\application\customer\KarateTest\Runner.class
+com\application\customer\model\test.class
+com\application\customer\CustomerApplicationTests.class
+com\application\customer\model\CustomerRepositoryTest.class
+com\application\customer\service\impl\CustomerServiceImpleTest.class
+com\application\customer\controller\CustomerControllerTest.class
