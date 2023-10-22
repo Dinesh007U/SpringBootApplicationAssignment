@@ -1,7 +1,7 @@
-# SpringBootApplicationAssignment
-This project is a first assignment for creating a Spring Boot Applications
+# SpringBootApplicationProject
+This project is the first assignment for creating a Spring Boot Applications
 
-Assignment : 
+Project : 
 
 The objective is for you to learn and then work on an assignment with below requirements
 > Create a SpringBoot application with CRUD REST APIs for Customer entity
