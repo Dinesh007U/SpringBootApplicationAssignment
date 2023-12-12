@@ -1,5 +1,5 @@
 # SpringBootApplicationProject
-This project is the first assignment for creating a Spring Boot Applications
+This project is creating a Spring Boot Applications
 
 Project : 
 
@@ -83,101 +83,4 @@ In case if there are validation errors or any internal server error, the respons
 
 
 
------------------------------------------------------------------------
-cmd commands
 
-netstat -ano | findstr 8080
-
-taskkill /F /PID <PID>
------------------------------------------------------------------------
-[
-    {
-        "id": "A1",
-        "name": "Raghu Kumar",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-10"
-    },
-    {
-        "id": "A2",
-        "name": "Sarath Kumar",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-11"
-    },
-    {
-        "id": "A3",
-        "name": "Mathan Gopi",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-12"
-    },
-    {
-        "id": "A4",
-        "name": "Sam Thomas",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-13"
-    },
-    {
-        "id": "A5",
-        "name": "Mathan Raghu",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-14"
-    },
-    {
-        "id": "A6",
-        "name": "Raghu Palani",
-        "email": "raghu@email.com",
-        "age": 22,
-        "city": "Theni",
-        "state": "Tamil Nadu",
-        "country": "India",
-        "zipcode": 634500,
-        "onboardedDate": "2005-04-15"
-    }
-]
-
-
-
----------------------------------------------------------------
-05-08-2023
-----------
-Updated a search query by doing operations like searching customer details based up on customer's name, id and onboardedDate.
-----------------------------------------------------------------
-06-08-2023
-----------
-Created a Custom Exception Handling for Crud Operations.
-----------------------------------------------------------------
-07-08-2023
-----------
-Solved an error in searching customer details by using date.
-Created a request by using json file.
-Created a Customer Exception Handling for Search Operations.
------------------------------------------------------------------
-18-08-2023
-----------
-Updated a customer Application code until, JUnit tests
-Additionally, added Karate test separate application to test by Karate Test Framework.
-------------------------------------------------------------------
